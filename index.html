@@ -1,0 +1,607 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080014">
+  <title>PRIYA.EXE | The Digital Universe</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+      background: #05000d;
+      color: white;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    #city {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    .interface {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px 5%;
+    }
+
+    .topbar, .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .brand {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-shadow: 0 0 12px #ff00e6, 0 0 25px #8b00ff;
+    }
+
+    .status {
+      color: #66ffe0;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #00ffe1;
+    }
+
+    .hero {
+      text-align: center;
+      align-self: center;
+      margin-top: -20px;
+      max-width: 850px;
+    }
+
+    .eyebrow {
+      color: #6ffff0;
+      letter-spacing: 6px;
+      font-size: 12px;
+      margin-bottom: 18px;
+      text-shadow: 0 0 12px #00eaff;
+    }
+
+    h1 {
+      font-size: clamp(42px, 9vw, 105px);
+      font-weight: 950;
+      line-height: 1;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, #ff39d7, #a77bff, #39eaff, #a6ff76, #ff39d7);
+      background-size: 300% auto;
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: rainbow 7s linear infinite;
+      filter: drop-shadow(0 0 18px #a000ff66);
+    }
+
+    @keyframes rainbow {
+      to { background-position: 300% center; }
+    }
+
+    .subtitle {
+      margin-top: 18px;
+      color: #e6d8ff;
+      letter-spacing: 5px;
+      font-size: clamp(11px, 2vw, 16px);
+    }
+
+    .description {
+      color: #bcb0d5;
+      margin: 18px auto 25px;
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 570px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      pointer-events: auto;
+    }
+
+    .btn {
+      border: 1px solid #d34bff;
+      background: #210b39bb;
+      color: white;
+      padding: 13px 22px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: .25s;
+      box-shadow: 0 0 15px #a000ff33;
+    }
+
+    .btn:hover {
+      background: #a000ff;
+      box-shadow: 0 0 25px #d000ff;
+      transform: translateY(-3px);
+    }
+
+    .bottom {
+      color: #c3b6df;
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    .bottom a {
+      color: #6ffff0;
+      text-decoration: none;
+      pointer-events: auto;
+    }
+
+    .hint {
+      text-align: center;
+      color: #b9a7d9;
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-top: 12px;
+    }
+
+    #message {
+      position: fixed;
+      z-index: 5;
+      left: 50%;
+      bottom: 75px;
+      transform: translateX(-50%);
+      color: #8affef;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-align: center;
+      pointer-events: none;
+      text-shadow: 0 0 10px #00eaff;
+    }
+
+    @media (max-width: 600px) {
+      .interface { padding: 20px 5%; }
+      .brand { letter-spacing: 2px; }
+      .status { font-size: 8px; letter-spacing: 1px; }
+      .eyebrow { letter-spacing: 3px; }
+      .subtitle { letter-spacing: 2px; }
+      .description { font-size: 12px; }
+      .bottom { font-size: 8px; }
+      .btn { padding: 11px 14px; font-size: 9px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="city"></div>
+
+  <div class="interface">
+    <header class="topbar">
+      <div class="brand">PRIYA<span style="color:#53faff">.EXE</span></div>
+      <div class="status">● SYSTEM ONLINE // 2026</div>
+    </header>
+
+    <main class="hero">
+      <div class="eyebrow">WELCOME TO MY DIGITAL WORLD</div>
+      <h1>THE FUTURE<br>IS INTERACTIVE</h1>
+      <div class="subtitle">CYBERSECURITY • CODE • INNOVATION</div>
+      <p class="description">
+        Exploring the intersection of technology, creativity and cybersecurity.
+        Enter my neon universe and discover the projects I build.
+      </p>
+
+      <div class="actions">
+        <button class="btn" id="explore">EXPLORE THE CITY</button>
+        <button class="btn" id="projects">PROJECT PORTALS ↓</button>
+        <a class="btn" href="https://github.com/priyadarshini-tech-maker" target="_blank" rel="noopener">GITHUB ↗</a>
+      </div>
+      <div class="hint">DRAG TO EXPLORE · MOVE YOUR MOUSE · CLICK A PROJECT PORTAL</div>
+    </main>
+
+    <footer class="bottom">
+      <span>DESIGNED IN THE DIGITAL UNIVERSE</span>
+      <span>
+        <a href="https://www.linkedin.com/in/priyadarshini-p" target="_blank" rel="noopener">LINKEDIN ↗</a>
+        &nbsp; | &nbsp;
+        <a href="https://github.com/priyadarshini-tech-maker" target="_blank" rel="noopener">GITHUB ↗</a>
+      </span>
+    </footer>
+  </div>
+
+  <div id="message">INITIALIZING NEON CITY...</div>
+
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+
+    const container = document.getElementById("city");
+    const message = document.getElementById("message");
+
+    let scene, camera, renderer;
+    let portals = [];
+    let pointer = new THREE.Vector2();
+    let raycaster = new THREE.Raycaster();
+    let targetX = 0;
+    let targetY = 0;
+    let dragStart = null;
+    let dragRotation = 0;
+    let clock = new THREE.Clock();
+
+    const projectData = [
+      {
+        title: "AdPulse Sentinel",
+        subtitle: "AI SECURITY PROJECT",
+        color: "#ff36d9",
+        url: "https://github.com/priyadarshini-tech-maker/AdPulseSentinel"
+      },
+      {
+        title: "Secure Craft Works",
+        subtitle: "CYBERSECURITY",
+        color: "#42eaff",
+        url: "https://github.com/priyadarshini-tech-maker/secure-craft-works"
+      },
+      {
+        title: "Priya Cyber Portfolio",
+        subtitle: "WEB DEVELOPMENT",
+        color: "#a978ff",
+        url: "https://github.com/priyadarshini-tech-maker/Priya-cyber-portfolio"
+      },
+      {
+        title: "Vehicle Management",
+        subtitle: "SOFTWARE PROJECT",
+        color: "#a5ff72",
+        url: "https://github.com/priyadarshini-tech-maker/Crud_Project1-Vehicle-Management-System"
+      }
+    ];
+
+    function makeNeonLine(points, color, opacity = 0.8) {
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const material = new THREE.LineBasicMaterial({
+        color,
+        transparent: true,
+        opacity
+      });
+      const line = new THREE.Line(geometry, material);
+      scene.add(line);
+      return line;
+    }
+
+    function createBuilding(x, z, width, height, depth, color) {
+      const building = new THREE.Group();
+      building.position.set(x, 0, z);
+
+      const body = new THREE.Mesh(
+        new THREE.BoxGeometry(width, height, depth),
+        new THREE.MeshStandardMaterial({
+          color: 0x100b27,
+          roughness: 0.45,
+          metalness: 0.65,
+          emissive: color,
+          emissiveIntensity: 0.10
+        })
+      );
+      body.position.y = height / 2;
+      building.add(body);
+
+      const edgeMaterial = new THREE.LineBasicMaterial({
+        color,
+        transparent: true,
+        opacity: 0.8
+      });
+      const edges = new THREE.LineSegments(
+        new THREE.EdgesGeometry(new THREE.BoxGeometry(width, height, depth)),
+        edgeMaterial
+      );
+      edges.position.y = height / 2;
+      building.add(edges);
+
+      // Glowing window strips
+      for (let y = 2; y < height - 1; y += 3) {
+        const windowMesh = new THREE.Mesh(
+          new THREE.BoxGeometry(width * 0.72, 0.12, 0.04),
+          new THREE.MeshBasicMaterial({ color })
+        );
+        windowMesh.position.set(0, y, depth / 2 + 0.03);
+        building.add(windowMesh);
+      }
+
+      scene.add(building);
+    }
+
+    function createPortalTexture(title, subtitle, color) {
+      const canvas = document.createElement("canvas");
+      canvas.width = 512;
+      canvas.height = 256;
+      const ctx = canvas.getContext("2d");
+
+      ctx.fillStyle = "#100821";
+      ctx.fillRect(0, 0, 512, 256);
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 8;
+      ctx.strokeRect(8, 8, 496, 240);
+
+      ctx.fillStyle = color;
+      ctx.font = "bold 24px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("PROJECT PORTAL", 256, 65);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 31px Arial";
+      ctx.fillText(title, 256, 132);
+
+      ctx.fillStyle = "#b9a9d5";
+      ctx.font = "20px Arial";
+      ctx.fillText(subtitle, 256, 185);
+
+      ctx.fillStyle = color;
+      ctx.font = "18px Arial";
+      ctx.fillText("CLICK TO EXPLORE ↗", 256, 222);
+
+      return new THREE.CanvasTexture(canvas);
+    }
+
+    function createPortal(project, x, z) {
+      const group = new THREE.Group();
+      group.position.set(x, 3.5, z);
+
+      const frame = new THREE.Mesh(
+        new THREE.BoxGeometry(5.2, 2.8, 0.18),
+        new THREE.MeshBasicMaterial({
+          color: project.color,
+          wireframe: true
+        })
+      );
+      group.add(frame);
+
+      const panel = new THREE.Mesh(
+        new THREE.PlaneGeometry(5, 2.6),
+        new THREE.MeshBasicMaterial({
+          map: createPortalTexture(project.title, project.subtitle, project.color),
+          transparent: true,
+          side: THREE.DoubleSide
+        })
+      );
+      panel.position.z = 0.12;
+      group.add(panel);
+
+      group.userData.url = project.url;
+      group.userData.title = project.title;
+      group.userData.baseY = 3.5;
+
+      scene.add(group);
+      portals.push(group);
+    }
+
+    function createCity() {
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x05000f);
+      scene.fog = new THREE.FogExp2(0x090018, 0.018);
+
+      camera = new THREE.PerspectiveCamera(
+        65,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        500
+      );
+      camera.position.set(0, 6, 17);
+      camera.lookAt(0, 3, -10);
+
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: false
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.3;
+      container.appendChild(renderer.domElement);
+
+      // Lighting
+      scene.add(new THREE.AmbientLight(0x8b6aff, 1.2));
+
+      const pinkLight = new THREE.PointLight(0xff00cc, 35, 90);
+      pinkLight.position.set(-12, 12, -12);
+      scene.add(pinkLight);
+
+      const blueLight = new THREE.PointLight(0x00ccff, 35, 90);
+      blueLight.position.set(12, 10, -18);
+      scene.add(blueLight);
+
+      // Ground
+      const ground = new THREE.Mesh(
+        new THREE.PlaneGeometry(180, 180),
+        new THREE.MeshStandardMaterial({
+          color: 0x080516,
+          metalness: 0.7,
+          roughness: 0.35
+        })
+      );
+      ground.rotation.x = -Math.PI / 2;
+      ground.position.y = -0.08;
+      scene.add(ground);
+
+      const grid = new THREE.GridHelper(180, 90, 0x9b21ff, 0x32105b);
+      grid.position.y = 0.02;
+      scene.add(grid);
+
+      // Central neon road
+      const road = new THREE.Mesh(
+        new THREE.PlaneGeometry(10, 150),
+        new THREE.MeshBasicMaterial({ color: 0x08051b })
+      );
+      road.rotation.x = -Math.PI / 2;
+      road.position.set(0, 0.03, -35);
+      scene.add(road);
+
+      makeNeonLine([
+        new THREE.Vector3(-5, 0.08, 30),
+        new THREE.Vector3(-5, 0.08, -100)
+      ], 0xff27d8);
+
+      makeNeonLine([
+        new THREE.Vector3(5, 0.08, 30),
+        new THREE.Vector3(5, 0.08, -100)
+      ], 0x24eaff);
+
+      // City skyline
+      const colors = [0xff28d7, 0x20eaff, 0x9d62ff, 0x7dff8a];
+
+      for (let i = 0; i < 55; i++) {
+        const side = i % 2 === 0 ? -1 : 1;
+        const x = side * (9 + Math.random() * 28);
+        const z = 8 - Math.random() * 100;
+        const width = 2 + Math.random() * 5;
+        const height = 7 + Math.random() * 28;
+        const depth = 3 + Math.random() * 5;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        createBuilding(x, z, width, height, depth, color);
+      }
+
+      // Project portals in the distance
+      createPortal(projectData[0], -8, -14);
+      createPortal(projectData[1], 8, -14);
+      createPortal(projectData[2], -8, -25);
+      createPortal(projectData[3], 8, -25);
+
+      // Stars and floating particles
+      const starPositions = [];
+      for (let i = 0; i < 1500; i++) {
+        starPositions.push(
+          (Math.random() - 0.5) * 150,
+          Math.random() * 65 + 3,
+          -Math.random() * 130
+        );
+      }
+
+      const starGeometry = new THREE.BufferGeometry();
+      starGeometry.setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute(starPositions, 3)
+      );
+
+      const stars = new THREE.Points(
+        starGeometry,
+        new THREE.PointsMaterial({
+          color: 0xbbaaff,
+          size: 0.18,
+          transparent: true,
+          opacity: 0.8
+        })
+      );
+      scene.add(stars);
+
+      message.textContent = "CITY ONLINE · CLICK A PROJECT PORTAL";
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const elapsed = clock.getElapsedTime();
+
+      // Gentle camera movement
+      camera.position.x += (targetX * 5 - camera.position.x) * 0.035;
+      camera.position.y += ((6 + targetY * 2) - camera.position.y) * 0.035;
+      camera.position.x += dragRotation * 0.015;
+      camera.lookAt(targetX * 3, 3 + targetY, -10);
+
+      portals.forEach((portal, index) => {
+        portal.position.y =
+          portal.userData.baseY + Math.sin(elapsed * 1.4 + index) * 0.18;
+        portal.rotation.y = Math.sin(elapsed * 0.45 + index) * 0.035;
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    function updatePointer(event) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      targetX = pointer.x * 0.65;
+      targetY = pointer.y * 0.3;
+    }
+
+    function onPointerDown(event) {
+      dragStart = { x: event.clientX, y: event.clientY };
+    }
+
+    function onPointerUp(event) {
+      if (!dragStart) return;
+
+      const moved = Math.hypot(
+        event.clientX - dragStart.x,
+        event.clientY - dragStart.y
+      );
+
+      dragStart = null;
+
+      if (moved > 10) {
+        dragRotation += (event.clientX - event.clientX) * 0.01;
+        return;
+      }
+
+      updatePointer(event);
+      raycaster.setFromCamera(pointer, camera);
+      const targets = portals.flatMap(portal => portal.children);
+      const hits = raycaster.intersectObjects(targets, false);
+
+      if (hits.length > 0) {
+        let selected = hits[0].object.parent;
+        if (selected && selected.userData.url) {
+          window.open(selected.userData.url, "_blank", "noopener");
+          message.textContent = "OPENING " + selected.userData.title.toUpperCase();
+        }
+      }
+    }
+
+    function onResize() {
+      if (!camera || !renderer) return;
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    try {
+      createCity();
+      animate();
+
+      renderer.domElement.addEventListener("pointermove", updatePointer);
+      renderer.domElement.addEventListener("pointerdown", onPointerDown);
+      renderer.domElement.addEventListener("pointerup", onPointerUp);
+      window.addEventListener("resize", onResize);
+
+      document.getElementById("explore").addEventListener("click", () => {
+        targetX = 0;
+        targetY = 0;
+        camera.position.set(0, 6, 17);
+        message.textContent = "WELCOME TO THE NEON CITY";
+      });
+
+      document.getElementById("projects").addEventListener("click", () => {
+        camera.position.set(0, 5, 9);
+        targetX = 0;
+        targetY = 0;
+        message.textContent = "CLICK ONE OF THE FOUR PROJECT PORTALS";
+      });
+
+    } catch (error) {
+      console.error(error);
+      message.textContent =
+        "3D CITY COULD NOT LOAD. Please refresh and check your connection.";
+    }
+  </script>
+</body>
+</html>
